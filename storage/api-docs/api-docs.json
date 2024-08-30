@@ -1,0 +1,124 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Accordify simplified API version",
+        "description": "Accordify simplified version",
+        "contact": {
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/verify": {
+            "post": {
+                "tags": [
+                    "Certificate"
+                ],
+                "summary": "Verify certificate file",
+                "operationId": "087a32f0d92c6c1f4536972c0a0c9399",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "json_file": {
+                                        "description": "The JSON file to be verified",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/history": {
+            "get": {
+                "tags": [
+                    "Certificate"
+                ],
+                "summary": "Verification results",
+                "operationId": "f82bf8070b275636068cbb7797fbb391",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "VerificationResponseDTO": {
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "issuer": {
+                                "description": "Issuer of the certificate",
+                                "type": "string"
+                            },
+                            "result": {
+                                "description": "Result of the verification",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "VerificationResult": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "file_type": {
+                        "type": "integer"
+                    },
+                    "result": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Certificate",
+            "description": "Certificate"
+        }
+    ]
+}
